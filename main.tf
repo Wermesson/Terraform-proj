@@ -25,5 +25,5 @@ terraform {
 module "s3-bucket" {
   source  = "terraform-aws-modules/s3-bucket/aws"
   version = "4.1.1"
-  bucket = var.s3_bucket
+  bucket  = var.s3_bucket
 }
