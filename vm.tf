@@ -15,7 +15,7 @@ resource "aws_instance" "aws_vm" {
 }
 
 resource "azurerm_linux_virtual_machine" "azure_vm" {
-  name                = "az_vm_terraform"
+  name                = "az-vm-terraform"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   size                = "Standard_B1s"
