@@ -3,13 +3,6 @@ resource "aws_key_pair" "aws_key" {
   public_key = var.aws_key_pub
 }
 
-resource "azurerm_ssh_public_key" "az_key" {
-  name                = "azure-key"
-  resource_group_name = azurerm_network_security_group.nsg.name
-  location            = var.az_location
-  public_key          = var.azure_key_pub
-}
-
 resource "aws_instance" "aws_vm" {
   ami                         = var.ami
   instance_type               = var.instance_type

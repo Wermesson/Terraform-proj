@@ -27,3 +27,13 @@ module "s3-bucket" {
   version = "4.1.1"
   bucket  = var.s3_bucket
 }
+
+data "terraform_remote_state" "vnet" {
+  backend = "azurerm"
+  config = {
+    resource_group_name  = "rg-terraform-state"
+    storage_account_name = "wermessonfacundo01"
+    container_name       = "remote-state"
+    key                  = "azure-vnet/terraform.tfstate"
+  }
+}
