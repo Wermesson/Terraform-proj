@@ -52,3 +52,37 @@ resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4" {
   cidr_ipv4         = "0.0.0.0/0"
   ip_protocol       = "-1"
 }
+
+resource "aws_customer_gateway" "cg" {
+  bgp_asn    = 65000
+  ip_address = azurerm_public_ip.ip[1].ip_address
+  type       = "ipsec.1"
+
+  tags = {
+    Name = "CGW-VPN"
+  }
+}
+
+resource "aws_vpn_gateway" "vpn_gw" {
+  vpc_id = aws_vpc.vpc.id
+
+  tags = {
+    Name = "VPG-VPN"
+  }
+}
+
+resource "aws_vpn_connection" "site-to-site" {
+  customer_gateway_id = aws_customer_gateway.cg.id
+  vpn_gateway_id      = aws_vpn_gateway.vpn_gw.id
+  type                = "ipsec.1"
+  static_routes_only  = true
+
+  tags = {
+    Name = "VPN-AWS"
+  }
+}
+
+resource "aws_vpn_connection_route" "vpn-cr" {
+  destination_cidr_block = data.azurerm_subnet.subnet.address_prefixes
+  vpn_connection_id      = aws_vpn_connection.site-to-site.id
+}
