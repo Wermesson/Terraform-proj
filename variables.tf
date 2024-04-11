@@ -22,3 +22,8 @@ variable "instance_type" {
 variable "az_location" {
   default = "East US"
 }
+
+variable "force_destroy" {
+  type    = bool
+  default = false
+}

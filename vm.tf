@@ -14,10 +14,10 @@ resource "aws_instance" "aws_vm" {
   tags = local.common_tags
 }
 
-resource "azurerm_linux_virtual_machine" "azure_vm" {
-  name                = "az-vm-terraform"
+resource "azurerm_linux_virtual_machine" "vm" {
+  name                = "vm-terraform"
   resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
+  location            = var.az_location
   size                = "Standard_B1s"
   admin_username      = "terraform"
   network_interface_ids = [
