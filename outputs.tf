@@ -7,9 +7,13 @@ output "azure_public_ip" {
 }
 
 output "AWStunnel1IP" {
-  value = aws_vpn_connection.vpn.tunnel1_address
+  value = aws_vpn_connection.site-to-site.tunnel1_address
 }
 
 output "AWStunnel2IP" {
-  value = aws_vpn_connection.vpn.tunnel2_address
+  value = aws_vpn_connection.site-to-site.tunnel2_address
+}
+
+output "vpc_cidr" {
+  value = aws_vpc.vpc.cidr_block
 }

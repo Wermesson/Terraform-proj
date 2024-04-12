@@ -27,3 +27,19 @@ variable "force_destroy" {
   type    = bool
   default = false
 }
+
+variable "shared_key1" {
+  type = string
+}
+
+variable "shared_key2" {
+  type = string
+}
+
+variable "az_gate_ad1" {
+  type = string
+}
+
+variable "az_gate_ad2" {
+  type = string
+}

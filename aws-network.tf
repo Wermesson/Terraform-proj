@@ -83,6 +83,6 @@ resource "aws_vpn_connection" "site-to-site" {
 }
 
 resource "aws_vpn_connection_route" "vpn-cr" {
-  destination_cidr_block = data.azurerm_subnet.subnet.address_prefixes
+  destination_cidr_block = azurerm_subnet.subnet.address_prefixes[0]
   vpn_connection_id      = aws_vpn_connection.site-to-site.id
 }

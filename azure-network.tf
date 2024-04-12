@@ -136,3 +136,51 @@ EOF
 
   tags = local.common_tags
 }
+
+resource "azurerm_local_network_gateway" "alng" {
+  name                = "backHome"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+  gateway_address     = var.az_gate_ad1
+  address_space       = ["10.1.0.0/16"]
+
+  tags = {
+    Name = "LNG-AZURE"
+  }
+}
+
+resource "azurerm_local_network_gateway" "alng2" {
+  name                = "backHome2"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+  gateway_address     = var.az_gate_ad2
+  address_space       = ["10.1.0.0/16"]
+
+  tags = {
+    Name = "LNG-AZURE-STANDBY"
+  }
+}
+
+resource "azurerm_virtual_network_gateway_connection" "conn-1" {
+  name                = "conn-1"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+
+  type                       = "IPsec"
+  virtual_network_gateway_id = azurerm_virtual_network_gateway.vpn.id
+  local_network_gateway_id   = azurerm_local_network_gateway.alng.id
+
+  shared_key = var.shared_key1
+}
+
+resource "azurerm_virtual_network_gateway_connection" "conn-2" {
+  name                = "conn-2"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+
+  type                       = "IPsec"
+  virtual_network_gateway_id = azurerm_virtual_network_gateway.vpn.id
+  local_network_gateway_id   = azurerm_local_network_gateway.alng2.id
+
+  shared_key = var.shared_key2
+}
