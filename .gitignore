@@ -2,4 +2,4 @@
 .terraform*
 aws-key*
 azure-key*
-.out*
+*.out
