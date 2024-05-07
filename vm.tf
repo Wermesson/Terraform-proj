@@ -11,6 +11,14 @@ resource "aws_instance" "aws_vm" {
   subnet_id                   = aws_subnet.subnet.id
   vpc_security_group_ids      = [aws_security_group.security_group.id]
 
+  root_block_device {
+    volume_type           = "gp2"
+    volume_size           = 10
+    encrypted             = true
+    kms_key_id            = aws_kms_key.kms.id
+    delete_on_termination = true
+  }
+
   tags = local.common_tags
 }
 
